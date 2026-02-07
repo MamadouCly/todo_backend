@@ -1,0 +1,10 @@
+function errorHandler(err, req, res, next) {
+    console.log("ERREUR CAPTUREE PAR LE MIDDLEWARE", err.message);
+
+    res.status(err.status || 500).json({
+        success: false,
+        message: err.message || "Erreur serveur"
+    });
+}
+
+module.exports = errorHandler;

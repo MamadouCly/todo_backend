@@ -1,0 +1,35 @@
+# Dépendances
+node_modules/
+
+# Environnement
+.env
+.env.local
+.env.production
+.env.test
+
+#  Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Uploads utilisateurs
+uploads/
+
+# Build
+dist/
+build/
+
+# Cache
+.cache/
+.tmp/
+
+# OS / éditeur
+.DS_Store
+Thumds.db
+.vscode/
+.idea/
+
+# Tests
+coverage/
