@@ -1,16 +1,7 @@
-// Importation de "multer" et "path"
+// Importation de "multer"
 const multer = require("multer");
-const path = require("path");
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, path.join(__dirname, "../uploads"));
-    },
-    filename: (req, file, cb) => {
-        const ext = path.extname(file.originalname);
-        cb(null, Date.now() + ext);
-    }
-});
+const storage = multer.memoryStorage();
 
 // Fonction pour filtrer les imagas
 function fileFilter(req, file, cb) {
@@ -23,10 +14,11 @@ function fileFilter(req, file, cb) {
     }
 }
 
+// Upload middleware
 const upload = multer({
     storage,
-    limits: {fileSize: 200 * 1024 * 1024},
-    fileFilter
+    fileFilter,
+    limits: {fileSize: 2000 * 1024 * 1024}
 });
 
 module.exports = upload;

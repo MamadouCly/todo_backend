@@ -5,6 +5,7 @@ const userss = require("../../models/userModels/userModels");
 const {hashePassword, comparePassword} = require("../../utils/hash");
 const {generateToken} = require("../../utils/jwt");
 const {success, error} = require("../../utils/response");
+const imagekit = require("../../config/imageKit");
 
 // Fonction créer un compte
 async function register(req, res, next) {
@@ -16,13 +17,18 @@ async function register(req, res, next) {
             err.status = 400;
             return next(err);
         }
-        const profil = req.file.filename;
+        const resultImage = await imagekit.upload({
+            file: req.file.buffer,
+            fileName: Date.now() + "-" + req.file.originalname,
+            folder: "/profils"
+        });
+        const profilUrl = resultImage.url;
 
         // Hashage du mot de passe
         const hashedPassword = await hashePassword(password);
 
         // Enregistrement dans la base
-        const result = userss.signup(name, email, hashedPassword, profil);
+        const result = userss.signup(name, email, hashedPassword, profilUrl);
         success(res, 200, result, "Compte crée avec succès");
     } catch(err) {
         err.status = 500;
