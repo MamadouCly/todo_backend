@@ -28,7 +28,7 @@ async function register(req, res, next) {
         const hashedPassword = await hashePassword(password);
 
         // Enregistrement dans la base
-        const result = userss.signup(name, email, hashedPassword, profilUrl);
+        const result = await userss.signup(name, email, hashedPassword, profilUrl);
         success(res, 200, result, "Compte crée avec succès");
     } catch(err) {
         err.status = 500;
